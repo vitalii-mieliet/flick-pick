@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchMovieByID } from "../../services/tmdbAPI";
+import { fetchMovieDetails } from "../../services/tmdbAPI";
 import { NavLink, Outlet, useParams } from "react-router-dom";
 import Section from "../../components/Section/Section";
 import Container from "../../components/Container/Container";
@@ -12,16 +12,16 @@ const MovieDetailsPage = () => {
   useEffect(() => {
     if (!movieId) return;
 
-    const getMovieByID = async () => {
+    const getMovieDetails = async () => {
       try {
-        const data = await fetchMovieByID(Number(movieId));
+        const data = await fetchMovieDetails(Number(movieId));
         setMovie(data);
       } catch (error) {
         console.error("Failed to fetch movie details:", error);
       }
     };
 
-    getMovieByID();
+    getMovieDetails();
   }, [movieId]);
 
   return (

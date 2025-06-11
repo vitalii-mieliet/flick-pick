@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchReviewsByID } from "../../services/tmdbAPI";
+import { fetchMovieReviews } from "../../services/tmdbAPI";
 
 const MovieReviews = () => {
   const { movieId } = useParams();
@@ -9,16 +9,16 @@ const MovieReviews = () => {
   useEffect(() => {
     if (!movieId) return;
 
-    const getReviewsByID = async () => {
+    const getMovieReviews = async () => {
       try {
-        const data = await fetchReviewsByID(Number(movieId), 1);
+        const data = await fetchMovieReviews(Number(movieId), 1);
         setReviews(data.results);
       } catch (error) {
         console.error("Failed to fetch reviews details:", error);
       }
     };
 
-    getReviewsByID();
+    getMovieReviews();
   }, [movieId]);
 
   console.log(reviews);
