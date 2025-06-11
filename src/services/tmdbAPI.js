@@ -29,3 +29,11 @@ export const fetchMovieByID = async (movie_id) => {
   const res = await tmdbAPI.get(`/movie/${movie_id}`);
   return res.data;
 };
+
+export const fetchReviewsByID = async (movie_id, page = 1) => {
+  const params = {
+    page,
+  };
+  const res = await tmdbAPI.get(`/movie/${movie_id}/reviews`, { params });
+  return res.data;
+};
