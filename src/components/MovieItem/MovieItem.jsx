@@ -1,12 +1,16 @@
 import styles from "./MovieItem.module.css";
-
+import noImage from "../../assets/no-image.webp";
 const MovieItem = ({ movie }) => {
-  const { poster_path, title, release_date, vote_average, overview } = movie;
+  const { poster_path, title, release_date, vote_average } = movie;
 
   return (
     <li className={styles.card}>
       <img
-        src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+        src={
+          poster_path
+            ? `https://image.tmdb.org/t/p/w500${poster_path}`
+            : noImage
+        }
         alt={title}
         className={styles.poster}
       />
