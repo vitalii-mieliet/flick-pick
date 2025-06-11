@@ -13,8 +13,10 @@
 
 .poster {
   width: 100%;
-  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
   border-radius: 8px;
+  background-color: #1e1e1e;
 }
 
 .info {

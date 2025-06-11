@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Container from "../../components/Container/Container";
-import MovieList from "../../components/MovieList/MovieList";
-import Section from "../../components/Section/Section";
 import { fetchPopularMovies } from "../../services/tmdbAPI";
+import Container from "../../components/Container/Container";
+import Section from "../../components/Section/Section";
+import MovieList from "../../components/MovieList/MovieList";
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -14,7 +14,7 @@ const HomePage = () => {
     };
     getPopularMovies();
   }, []);
-  console.log(movies);
+
   return (
     <Section>
       <Container>
