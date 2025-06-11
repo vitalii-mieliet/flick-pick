@@ -24,3 +24,8 @@ export const fetchMoviesByQuery = async (query = "", page = 1) => {
   const res = await tmdbAPI.get("/search/movie", { params });
   return res.data;
 };
+
+export const fetchMovieByID = async (movie_id) => {
+  const res = await tmdbAPI.get(`/movie/${movie_id}`);
+  return res.data;
+};
