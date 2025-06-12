@@ -37,3 +37,8 @@ export const fetchMovieReviews = async (movie_id, page = 1) => {
   const res = await tmdbAPI.get(`/movie/${movie_id}/reviews`, { params });
   return res.data;
 };
+
+export const fetchMovieCast = async (movie_id) => {
+  const res = await tmdbAPI.get(`/movie/${movie_id}/credits`);
+  return res.data;
+};

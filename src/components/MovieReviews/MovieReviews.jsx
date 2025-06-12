@@ -21,8 +21,6 @@ const MovieReviews = () => {
     getMovieReviews();
   }, [movieId]);
 
-  console.log(reviews);
-
   return (
     <ul>
       {reviews.map((review) => (
