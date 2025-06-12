@@ -1,44 +1,51 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useDebounce } from "use-debounce";
 import { fetchMoviesByQuery } from "../../services/tmdbAPI";
 import Container from "../../components/Container/Container";
 import MovieList from "../../components/MovieList/MovieList";
 import Section from "../../components/Section/Section";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const query = searchParams.get("query") ?? "";
-  const [debouncedQuery] = useDebounce(query, 300);
+  const page = Number(searchParams.get("page")) || 1;
 
-  const changeSearchParams = (e) => {
-    const newQuery = e.target.value;
+  const handleFormSubmit = (newQuery) => {
     const newSearchParams = new URLSearchParams();
-
-    if (newQuery !== "") {
-      newSearchParams.set("query", newQuery);
-    } else {
-      newSearchParams.delete("query");
-    }
+    newSearchParams.set("query", newQuery);
+    newSearchParams.set("page", 1);
     setSearchParams(newSearchParams);
   };
 
   useEffect(() => {
-    // if (!query) return;
-    const getMoviesByWuery = async () => {
-      const data = await fetchMoviesByQuery(debouncedQuery);
-      setMovies(data.results);
+    if (!query) return;
+    const getMoviesByQuery = async () => {
+      try {
+        setError(null);
+        setIsLoading(true);
+        const { results } = await fetchMoviesByQuery(query, page);
+        setMovies(results);
+      } catch (error) {
+        setError(error.message || "Something went wrong");
+      } finally {
+        setIsLoading(false);
+      }
     };
-    getMoviesByWuery();
-  }, [debouncedQuery]);
+    getMoviesByQuery();
+  }, [query, page]);
 
   return (
     <Section>
       <Container>
-        <input type="text" value={query} onChange={changeSearchParams} />
+        <SearchBar onSubmit={handleFormSubmit} />
 
-        <MovieList movieList={movies} />
+        {isLoading && <p>Loading...</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        {!isLoading && !error && <MovieList movieList={movies} />}
       </Container>
     </Section>
   );
