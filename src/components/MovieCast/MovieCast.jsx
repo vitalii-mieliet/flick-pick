@@ -28,12 +28,13 @@ const MovieCast = () => {
     getMovieCast();
   }, [movieId]);
 
-  if (cast.length === 0) return <p>No cast available.</p>;
-
   return (
     <div>
       {isLoading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className={css.error}>{error}</p>}
+      {cast.length === 0 && !isLoading && !error && (
+        <p>No reviews available.</p>
+      )}
       <ul className={css.list}>
         {cast.map(({ id, name, character, profile_path }) => (
           <li key={id} className={css.card}>
