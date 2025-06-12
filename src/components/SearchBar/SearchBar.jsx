@@ -11,7 +11,7 @@ const SearchBar = ({ onSubmit }) => {
   };
 
   return (
-    <>
+    <div className={css.wrapper}>
       <form className={css.form} action={handleSubmit}>
         <input
           className={css.input}
@@ -37,7 +37,7 @@ const SearchBar = ({ onSubmit }) => {
         pauseOnHover
         theme="colored"
       />
-    </>
+    </div>
   );
 };
 
