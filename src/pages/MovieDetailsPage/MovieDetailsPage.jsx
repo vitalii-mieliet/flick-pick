@@ -10,10 +10,12 @@ import {
 import Section from "../../components/Section/Section";
 import Container from "../../components/Container/Container";
 import MovieDetails from "../../components/MovieDetails/MovieDetails";
+import css from "./MovieDetailsPage.module.css";
+import clsx from "clsx";
 
 const MovieDetailsPage = () => {
   const location = useLocation();
-  const backLinkRef = useRef(location.state);
+  const backLinkRef = useRef(location.state?.from || "/");
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
 
@@ -32,15 +34,26 @@ const MovieDetailsPage = () => {
     getMovieDetails();
   }, [movieId]);
 
+  const getNavLinkClass = ({ isActive }) =>
+    clsx(css.link, isActive && css.active);
+
   return (
     <Section>
       <Container>
-        <Link to={backLinkRef.current}>Go back</Link>
+        <Link to={backLinkRef.current} className={css.backLink}>
+          Go back
+        </Link>
         {movie ? <MovieDetails movie={movie} /> : <p>Loading...</p>}
-        <ul>
+        <ul className={css.navList}>
           <li>
-            <NavLink to={"cast"}>Cast</NavLink>
-            <NavLink to={"reviews"}>Reviews</NavLink>
+            <NavLink to={"cast"} className={getNavLinkClass}>
+              Cast
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={"reviews"} className={getNavLinkClass}>
+              Reviews
+            </NavLink>
           </li>
         </ul>
         <Outlet />
