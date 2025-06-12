@@ -15,7 +15,7 @@ import clsx from "clsx";
 
 const MovieDetailsPage = () => {
   const location = useLocation();
-  const backLinkRef = useRef(location.state?.from || "/");
+  const backLinkRef = useRef(location.state || "/");
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
 
