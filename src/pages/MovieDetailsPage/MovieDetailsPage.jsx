@@ -1,11 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchMovieDetails } from "../../services/tmdbAPI";
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import Section from "../../components/Section/Section";
 import Container from "../../components/Container/Container";
 import MovieDetails from "../../components/MovieDetails/MovieDetails";
 
 const MovieDetailsPage = () => {
+  const location = useLocation();
+  const backLinkRef = useRef(location.state);
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
 
@@ -27,6 +35,7 @@ const MovieDetailsPage = () => {
   return (
     <Section>
       <Container>
+        <Link to={backLinkRef.current}>Go back</Link>
         {movie ? <MovieDetails movie={movie} /> : <p>Loading...</p>}
         <ul>
           <li>

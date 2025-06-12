@@ -1,11 +1,12 @@
 import styles from "./MovieItem.module.css";
 import noImage from "../../assets/no-image.webp";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const MovieItem = ({ movie }) => {
+  const location = useLocation();
   const { id, poster_path, title, release_date, vote_average } = movie;
 
   return (
-    <Link to={`/movies/${id}`}>
+    <Link to={`/movies/${id}`} state={location}>
       <li className={styles.card}>
         <img
           src={
